@@ -6,7 +6,8 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:paddingRight="16dp"
+    android:focusableInTouchMode="true">
 
     <TextView
         android:id="@+id/symbol"
@@ -14,13 +15,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start|center_vertical"
-        tools:text="GOOG" />
+        tools:text="GOOG"
+        android:duplicateParentState="true"
+        android:textColor="@color/stock_selector"/>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="end">
+        android:gravity="end"
+        android:duplicateParentState="true">
 
         <TextView
             android:id="@+id/price"
@@ -28,7 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10sp"
-            tools:text="1000.00" />
+            tools:text="1000.00"
+            android:duplicateParentState="true"
+            android:textColor="@color/stock_selector"/>
 
         <TextView
             android:id="@+id/change"
@@ -38,6 +44,8 @@
             android:background="@drawable/percent_change_pill_green"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
-            tools:text="100%" />
+            tools:text="100%"
+            android:duplicateParentState="true"
+            android:textColor="@color/stock_selector"/>
     </LinearLayout>
 </LinearLayout>
