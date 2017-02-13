@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.udacity.stockhawk.R;
@@ -17,6 +18,8 @@ import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 
 import java.io.IOException;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -91,10 +94,17 @@ public final class QuoteSyncJob {
 
                         StringBuilder historyBuilder = new StringBuilder();
 
+                        final int precision = 4;
+                        MathContext mc = new MathContext(precision, RoundingMode.FLOOR);
+
                         for (HistoricalQuote it : history) {
-                            historyBuilder.append(it.getDate().getTimeInMillis());
-                            historyBuilder.append(", ");
-                            historyBuilder.append(it.getClose());
+                            historyBuilder.append(it.getDate().get(Calendar.MONTH) + 1);
+                            historyBuilder.append(",");
+                            historyBuilder.append(it.getDate().get(Calendar.DAY_OF_MONTH));
+                            historyBuilder.append(",");
+                            historyBuilder.append(it.getDate().get(Calendar.YEAR));
+                            historyBuilder.append(",");
+                            historyBuilder.append(it.getClose().round(mc));
                             historyBuilder.append("\n");
                         }
 

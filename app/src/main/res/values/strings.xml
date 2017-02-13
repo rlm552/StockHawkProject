@@ -35,4 +35,6 @@
 
     <string name="toast_no_quote">Stock symbol not found. Stock not added.</string>
 
+    <string name="line_chart_description">Week to week 2 year history</string>
+
 </resources>

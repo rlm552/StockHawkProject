@@ -2,6 +2,7 @@ package com.udacity.stockhawk.ui;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
@@ -129,9 +132,20 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
             int adapterPosition = getAdapterPosition();
             cursor.moveToPosition(adapterPosition);
             int symbolColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_SYMBOL);
+            final String symbol = cursor.getString(symbolColumn);
             clickHandler.onClick(cursor.getString(symbolColumn));
 
+            int historyColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_HISTORY);
+            final String history = cursor.getString(historyColumn);
 
+            final String STOCK_HISTORY = "STOCK_HISTORY";
+            final String STOCK_SYMBOL = "STOCK_SYMBOL";
+
+            Context context = v.getContext();
+            final Intent intent = new Intent(context, LineChartActivity.class);
+            intent.putExtra(STOCK_HISTORY, history);
+            intent.putExtra(STOCK_SYMBOL, symbol);
+            context.startActivity(intent);
 
         }
 
