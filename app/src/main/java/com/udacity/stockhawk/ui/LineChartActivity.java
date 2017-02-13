@@ -21,18 +21,21 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Utils;
 import com.udacity.stockhawk.R;
 import java.util.ArrayList;
 
 /* Used code from LineChart example */
 
-public class LineChartActivity extends Activity {
+public class LineChartActivity extends Activity implements OnChartValueSelectedListener {
 
     private LineChart mChart;
     private String STOCK_HISTORY = "STOCK_HISTORY";
     private String STOCK_SYMBOL = "STOCK_SYMBOL";
+    String xValuesCopy[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,9 @@ public class LineChartActivity extends Activity {
         mChart = (LineChart) findViewById(R.id.chart);
         mChart.setDrawGridBackground(false);
 
-        // no description text
-        mChart.getDescription().setEnabled(false);
+        mChart.setOnChartValueSelectedListener(this);
+
+        mChart.setContentDescription(this.getString(R.string.line_chart_content_description) + symbol);
         Description desc = new Description();
         desc.setText(this.getString(R.string.line_chart_description));
         mChart.setDescription(desc);
@@ -93,7 +97,7 @@ public class LineChartActivity extends Activity {
         l.setForm(LegendForm.LINE);
 
         // dont forget to refresh the drawing
-        //mChart.invalidate();
+        mChart.invalidate();
 
 
     }
@@ -123,8 +127,11 @@ public class LineChartActivity extends Activity {
             float val =  Float.valueOf(summaryValues[i][3]);
             values.add(new Entry(i, val));
 
+            //Construct the values for the x-axis e.g. month/day/year
             xValues[(summaryWeek.length - 1) - i] = summaryValues[i][0] + "/" + summaryValues[i][1] + "/" + summaryValues[i][2];
         }
+
+        xValuesCopy = xValues;
 
         XAxis xAxis = mChart.getXAxis();
         xAxis.setValueFormatter(new XAxisValueFormatter(xValues));
@@ -189,5 +196,17 @@ public class LineChartActivity extends Activity {
 
     }
 
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        int position = (int) e.getX();
+        String date = xValuesCopy[position];
+        String closingPrice = Float.toString(e.getY());
+        String contentDescription = date + " " + "Closing Price " + closingPrice;
+        mChart.setContentDescription(contentDescription);
+    }
 
+    @Override
+    public void onNothingSelected() {
+        mChart.setContentDescription(this.getString(R.string.no_chart_value_selected));
+    }
 }
