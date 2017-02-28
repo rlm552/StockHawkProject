@@ -33,11 +33,30 @@
     <string name="toast_stock_added_no_connectivity">Symbol <xliff.g id="added_stock">%s</xliff.g> added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
 
+    <!-- Toast message that is displayed when the Yahoo API does not return a quote for a given stock symbol -->
     <string name="toast_no_quote">Stock symbol not found. Stock not added.</string>
 
     <string name="line_chart_description">Week to week 2 year history</string>
     <string name="line_chart_content_description">A graph of a week to week 2 year history of</string>
 
     <string name="no_chart_value_selected">No Chart Value Selected</string>
+
+    <!-- Empty view text for widget -->
+    <string name="empty_view_text">No stocks to display</string>
+
+    <!-- Options for app widget configuration -->
+    <string name="radio_percent_change">Percent Change</string>
+    <string name="radio_dollar_change">Dollars</string>
+
+    <!-- The default display format for stock changes. Used in the configuration activity of the widget. Defaults can be
+        "com.udacity.stockhawk.widgets.StockAppWidgetConfigure.PERCENT_CHANGE" or "com.udacity.stockhawk.widgets.StockAppWidgetConfigure.ABSOLUTE_CHANGE" -->
+    <string name="appwidget_default" translatable="false">com.udacity.stockhawk.widgets.StockAppWidgetConfigure.PERCENT_CHANGE</string>
+
+    <!-- This toast message is displayed when a user tries to back out of the configuration activity for the widget without selecting a formatting option. -->
+    <string name="widget_config_failed">Please choose a display option to add the widget</string>
+
+    <string name="widget_instructions">Display options for stock changes</string>
+
+
 
 </resources>

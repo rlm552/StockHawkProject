@@ -7,14 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.udacity.stockhawk.data.Contract.Quote;
 
 
-class DbHelper extends SQLiteOpenHelper {
+public class DbHelper extends SQLiteOpenHelper {
 
 
     private static final String NAME = "StockHawk.db";
-    private static final int VERSION = 3;
+    private static final int VERSION = 6;
 
 
-    DbHelper(Context context) {
+    public DbHelper(Context context) {
         super(context, NAME, null, VERSION);
     }
 

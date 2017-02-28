@@ -1,5 +1,6 @@
 package com.udacity.stockhawk.ui;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;

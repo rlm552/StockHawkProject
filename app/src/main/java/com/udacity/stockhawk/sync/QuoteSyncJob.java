@@ -2,20 +2,22 @@ package com.udacity.stockhawk.sync;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
+import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
+import com.udacity.stockhawk.widgets.StockAppWidgetProvider;
 
 import java.io.IOException;
 import java.math.MathContext;
@@ -131,14 +133,27 @@ public final class QuoteSyncJob {
 
             }
 
-
             context.getContentResolver()
                     .bulkInsert(
                             Contract.Quote.URI,
                             quoteCVs.toArray(new ContentValues[quoteCVs.size()]));
+            Cursor cursor = context.getContentResolver().query(Contract.Quote.URI, null, null, null, null);
+
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            int[] appWidgetIds = appWidgetManager
+                   .getAppWidgetIds(new ComponentName(context, com.udacity.stockhawk.widgets.StockAppWidgetProvider.class));
+
+            for (int i = 0; i < appWidgetIds.length; i++){
+                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds[i], R.id.list_view);
+            }
 
             Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
             context.sendBroadcast(dataUpdatedIntent);
+
+            Intent intent = new Intent(context, StockAppWidgetProvider.class);
+            intent.setAction((AppWidgetManager.ACTION_APPWIDGET_UPDATE));
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+            context.sendBroadcast(intent);
 
         } catch (IOException exception) {
             Timber.e(exception, "Error fetching stock quotes");
