@@ -21,8 +21,6 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-
 class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
     private final Context context;

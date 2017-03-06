@@ -1,7 +1,9 @@
 package com.udacity.stockhawk.widgets;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,15 +19,16 @@ import com.udacity.stockhawk.R;
  */
 
 public class StockAppWidgetConfigure extends Activity {
-    public static final String PREFS_NAME
+    private static final String PREFS_NAME
             = "com.udacity.stockhawk.widgets.StockAppWidgetProvider";
 
     private static final String PREF_PREFIX_KEY = "prefix_";
     public static final String ABSOLUTE_CHANGE = "com.udacity.stockhawk.widgets.StockAppWidgetConfigure.ABSOLUTE_CHANGE";
-    public static final String PERCENT_CHANGE = "com.udacity.stockhawk.widgets.StockAppWidgetConfigure.PERCENT_CHANGE";
+    private static final String PERCENT_CHANGE = "com.udacity.stockhawk.widgets.StockAppWidgetConfigure.PERCENT_CHANGE";
 
-    int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    Intent resultValue;
+    private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    private Intent resultValue;
+    private boolean configured = false;
 
     public StockAppWidgetConfigure(){ super(); }
 
@@ -71,15 +74,14 @@ public class StockAppWidgetConfigure extends Activity {
                 mAppWidgetId);
 
         setResult(RESULT_OK, resultValue);
+        configured = true;
         finish();
     }
 
-    static void saveFormatPref(Context context, int appWidgetId, String text){
+    private static void saveFormatPref(Context context, int appWidgetId, String text){
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putString(PREF_PREFIX_KEY + appWidgetId, text);
         prefs.apply();
-
-
     }
 
     static String loadFormatPref(Context context, int appWidgetId){
@@ -88,8 +90,7 @@ public class StockAppWidgetConfigure extends Activity {
         if (format != null){
             return format;
         }else {
-            return null;
-            //return context.getString(R.string.appwidget_default);
+            return context.getString(R.string.appwidget_default);
         }
     }
 
@@ -99,6 +100,20 @@ public class StockAppWidgetConfigure extends Activity {
     @Override
     public void onBackPressed(){
         Toast.makeText(this, this.getString(R.string.widget_config_failed), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy(){
+        if (!configured){
+            ComponentName cm = new ComponentName(this, StockAppWidgetProvider.class);
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(cm);
+            AppWidgetHost appWidgetHost = new AppWidgetHost(this, 0);
+            for (int appWidgetId : appWidgetIds){
+                appWidgetHost.deleteAppWidgetId(appWidgetId);
+            }
+        }
+        super.onDestroy();
     }
 
 }

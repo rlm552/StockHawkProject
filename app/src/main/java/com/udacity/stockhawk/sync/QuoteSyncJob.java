@@ -137,7 +137,6 @@ public final class QuoteSyncJob {
                     .bulkInsert(
                             Contract.Quote.URI,
                             quoteCVs.toArray(new ContentValues[quoteCVs.size()]));
-            Cursor cursor = context.getContentResolver().query(Contract.Quote.URI, null, null, null, null);
 
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager

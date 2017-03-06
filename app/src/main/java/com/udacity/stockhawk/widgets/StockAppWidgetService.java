@@ -27,10 +27,10 @@ public class StockAppWidgetService extends RemoteViewsService{
 
 class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private static int mCount;
-    private List<WidgetItem> mWidgetItems = new ArrayList<WidgetItem>();
-    private Context mContext;
-    private int mAppWidgetId;
-    private String formatPref;
+    private final List<WidgetItem> mWidgetItems = new ArrayList<WidgetItem>();
+    private final Context mContext;
+    private final int mAppWidgetId;
+    private final String formatPref;
     private Cursor mCursor;
 
     public ListRemoteViewsFactory(Context context, Intent intent) {
@@ -92,7 +92,7 @@ class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     public void onDataSetChanged() { setmWidgetItems(); }
 
-    public void setmWidgetItems() {
+    private void setmWidgetItems() {
         mWidgetItems.clear();
 
         String[] projection = {

@@ -33,9 +33,9 @@ import java.util.ArrayList;
 public class LineChartActivity extends Activity implements OnChartValueSelectedListener {
 
     private LineChart mChart;
-    private String STOCK_HISTORY = "STOCK_HISTORY";
-    private String STOCK_SYMBOL = "STOCK_SYMBOL";
-    String xValuesCopy[];
+    private final String STOCK_HISTORY = "STOCK_HISTORY";
+    private final String STOCK_SYMBOL = "STOCK_SYMBOL";
+    private String[] xValuesCopy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +96,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         // modify the legend ...
         l.setForm(LegendForm.LINE);
 
-        // dont forget to refresh the drawing
+        // don't forget to refresh the drawing
         mChart.invalidate();
 
 
@@ -183,7 +183,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
     }
 
     public class XAxisValueFormatter implements IAxisValueFormatter{
-        private String[] mValues;
+        private final String[] mValues;
 
         public XAxisValueFormatter(String[] values) {
             this.mValues = values;

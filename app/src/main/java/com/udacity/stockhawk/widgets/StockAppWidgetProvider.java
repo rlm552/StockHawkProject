@@ -11,6 +11,8 @@ import android.widget.RemoteViews;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.ui.MainActivity;
 
+import timber.log.Timber;
+
 /**
  * Created by Rory on 2/13/2017.
  */
@@ -42,6 +44,7 @@ public class StockAppWidgetProvider extends AppWidgetProvider{
     public void onReceive(Context context, Intent intent) { super.onReceive(context, intent);  }
 
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds){
+        Timber.d(Integer.toString(appWidgetIds.length));
         for (int i = 0; i < appWidgetIds.length; ++i) {
             updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
         }
@@ -74,7 +77,6 @@ public class StockAppWidgetProvider extends AppWidgetProvider{
         Intent activityIntent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, activityIntent, 0);
         rv.setOnClickPendingIntent(R.id.widget_price, pendingIntent);
-        //rv.setPendingIntentTemplate(R.id.list_view, pendingIntent);
         appWidgetManager.updateAppWidget(appWidgetId, rv);
 
     }

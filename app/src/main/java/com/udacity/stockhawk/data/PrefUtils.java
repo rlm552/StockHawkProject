@@ -1,21 +1,14 @@
 package com.udacity.stockhawk.data;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.udacity.stockhawk.R;
-import com.udacity.stockhawk.widgets.StockAppWidgetProvider;
-import com.udacity.stockhawk.widgets.StockAppWidgetService;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import timber.log.Timber;
 
 public final class PrefUtils {
 

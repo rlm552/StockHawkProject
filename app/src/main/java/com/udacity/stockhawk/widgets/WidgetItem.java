@@ -3,7 +3,6 @@ package com.udacity.stockhawk.widgets;
 import android.util.Log;
 
 import com.udacity.stockhawk.R;
-import com.udacity.stockhawk.data.Contract;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -13,12 +12,12 @@ import java.util.Locale;
  * Created by Rory on 2/15/2017.
  */
 
-public class WidgetItem {
-    public String symbol;
-    public String price;
-    public String percentChange;
-    public String absoluteChange;
-    public int resource;
+class WidgetItem {
+    public final String symbol;
+    public final String price;
+    public final String percentChange;
+    public final String absoluteChange;
+    public final int resource;
 
     private final DecimalFormat dollarFormat;
     private final DecimalFormat dollarFormatWithPlus;
