@@ -18,7 +18,7 @@
         android:gravity="start|center_vertical"
         tools:text="GOOG"
         android:duplicateParentState="true"
-        android:textColor="@color/stock_selector"/>
+        android:textColor="@color/widget_text_color"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -35,7 +35,7 @@
             android:layout_marginEnd="10sp"
             tools:text="1000.00"
             android:duplicateParentState="true"
-            android:textColor="@color/stock_selector"/>
+            android:textColor="@color/widget_text_color"/>
 
         <TextView
             android:id="@+id/widget_change"
@@ -47,6 +47,6 @@
             android:paddingEnd="3dp"
             tools:text="100%"
             android:duplicateParentState="true"
-            android:textColor="@color/stock_selector"/>
+            android:textColor="@color/widget_text_color"/>
     </LinearLayout>
 </LinearLayout>

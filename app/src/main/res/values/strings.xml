@@ -57,6 +57,8 @@
 
     <string name="widget_instructions">Display options for stock changes</string>
 
+    <string name="chart_content_description"> Closing Price </string>
+
 
 
 </resources>

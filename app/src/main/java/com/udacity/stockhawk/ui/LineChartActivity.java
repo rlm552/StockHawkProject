@@ -201,7 +201,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         int position = (int) e.getX();
         String date = xValuesCopy[position];
         String closingPrice = Float.toString(e.getY());
-        String contentDescription = date + " " + "Closing Price " + closingPrice;
+        String contentDescription = date + getString(R.string.chart_content_description) + closingPrice;
         mChart.setContentDescription(contentDescription);
     }
 

@@ -1,6 +1,9 @@
 package com.udacity.stockhawk.ui;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -23,6 +26,7 @@ import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
+import com.udacity.stockhawk.widgets.StockAppWidgetProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @BindView(R.id.error)
     TextView error;
     private StockAdapter adapter;
+    private Context context = this;
+    private static final String ACTION_DATA_UPDATED = "com.udacity.stockhawk.ACTION_DATA_UPDATED";
 
     @Override
     public void onClick(String symbol) {
@@ -78,6 +84,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 String symbol = adapter.getSymbolAtPosition(viewHolder.getAdapterPosition());
                 PrefUtils.removeStock(MainActivity.this, symbol);
                 getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
+
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                int[] appWidgetIds = appWidgetManager
+                        .getAppWidgetIds(new ComponentName(context, com.udacity.stockhawk.widgets.StockAppWidgetProvider.class));
+
+                for (int i = 0; i < appWidgetIds.length; i++){
+                    appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds[i], R.id.list_view);
+                }
+
+                Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
+                context.sendBroadcast(dataUpdatedIntent);
+
+                Intent intent = new Intent(context, StockAppWidgetProvider.class);
+                intent.setAction((AppWidgetManager.ACTION_APPWIDGET_UPDATE));
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+                context.sendBroadcast(intent);
             }
         }).attachToRecyclerView(stockRecyclerView);
 

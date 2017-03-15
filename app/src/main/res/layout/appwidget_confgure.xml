@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/widget_instructions"
         android:text="@string/widget_instructions"
-        android:layout_marginLeft="10dp"/>
+        android:paddingStart="10dp"/>
     <RadioGroup
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
